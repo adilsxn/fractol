@@ -77,7 +77,10 @@ void	get_julia(char **av, int ac, t_fl *f)
 void	set_args(t_fl *f, char **av, int ac)
 {
 	if (ac < 2)
-		err_out("Please give me more arguments\n");
+	{
+		ft_printf("Please give me more arguments\n");
+		err_out(MSG);
+	}
 	else if (ft_strequ(av[1], "m"))
 		f->f = &mandelbrot;
 	else if (ft_strequ(av[1], "j"))
