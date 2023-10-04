@@ -24,29 +24,30 @@ LDFLAGS 	 = libft/libft.a minilibx-linux/libmlx.a -lm -lXext -lX11
 
 all: ${NAME}
 
-$(OBJ_DIR)/%.o: src/%.c | DIRECTORIES
+$(OBJ_DIR)/%.o: src/%.c | $(OBJ_DIR)
 	@${CC} ${CFLAGS} -c $< -o $@ -I ${INCS}
 
 
-${NAME}: $(OBJS)
+${NAME}: ${OBJS} | $(OBJ_DIR)
 	@make -s -C libft
 	@make -s -C minilibx-linux
+#	@cd	${BIN_DIR}
 	@${CC} ${CFLAGS} ${OBJS} ${LDFLAGS}  -o ${NAME} -I ${INCS}
-	@mv ${NAME} ${BIN_DIR}/$(NAME)
 	@echo "Fractol compiled"
 
 
-DIRECTORIES:
-	@mkdir -p $(BIN_DIR)
-	@mkdir -p $(OBJ_DIR)
+$(OBJ_DIR):
+#	@mkdir -p ${BIN_DIR}
+	@mkdir -p ${OBJ_DIR}
 
 clean:
 	@${RM} ${OBJ_DIR}
 	@make clean -s -C libft
 
 fclean: clean
-	@${RM} ${BIN_DIR}
+	@${RM} ${NAME}
 	@make fclean -s -C libft
+	@echo "Fractol deleted"
 
 re: fclean all
 
